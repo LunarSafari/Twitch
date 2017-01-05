@@ -18,5 +18,9 @@ module Twitch
     def clear
       clear_rect([0, 0], @width, @height)
     end
+
+    def draw_image(image, position)
+      `#{@context}.drawImage(#{image.to_n}, #{image.x}, #{image.y}, #{image.width}, #{image.height}, #{position[0]}, #{position[1]}, #{image.width}, #{image.height})`
+    end
   end
 end

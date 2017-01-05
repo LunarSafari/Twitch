@@ -8,8 +8,9 @@ module Twitch
     def self.loop!
       last_timestamp = 0
       func = ->(timestamp){
-        update(timestamp - last_timestamp)
-        draw
+        dt = timestamp - last_timestamp
+        update(dt)
+        draw if dt < 16.7
         last_timestamp = timestamp
         `requestAnimationFrame(#{func.to_n})`
       }
