@@ -1,16 +1,16 @@
 module Twitch
   class Game
-    def self.init(canvas, **options)
+
+    def initialize canvas, **options
       @canvas = canvas
       @objects = []
     end
 
-    def self.loop!
+    def loop!
       last_timestamp = 0
       func = ->(timestamp){
-        dt = timestamp - last_timestamp
-        update(dt)
-        draw if dt < 16.7
+        update(timestamp - last_timestamp)
+        draw
         last_timestamp = timestamp
         `requestAnimationFrame(#{func.to_n})`
       }
@@ -21,20 +21,20 @@ module Twitch
       `requestAnimationFrame(#{init_func.to_n})`
     end
 
-    def self.update dt
-      @objects.each{|o| o.update dt }
+    def update dt
+      @objects.each{|o| o.update dt}
     end
 
-    def self.draw
+    def draw
       @canvas.clear
       @objects.each{|o| o.draw @canvas if o.respond_to? :draw }
     end
 
-    def self.register object
+    def register object
       @objects << object
     end
 
-    def self.remove object
+    def remove object
       @objects.delete(object)
     end
   end
