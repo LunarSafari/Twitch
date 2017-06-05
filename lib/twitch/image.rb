@@ -22,5 +22,20 @@ module Twitch
     def to_n
       @image_object
     end
+
+    def slice position, size
+      Image.new(@image_object, position, size)
+    end
+
+    def slice_into_array row_size, column_size
+      height = @height / row_size
+      width = @width / column_size
+      sprite_size = [width, height]
+      (0...row_size).map do |row_index|
+        (0...column_size).map do |column_index|
+          Image.new(@image_object, [column_index * width, row_index * height], sprite_size)
+        end
+      end
+    end
   end
 end
